@@ -1,0 +1,6 @@
+
+deployment:
+  tasks:
+    - git pull
+    - export DEPLOYPATH=/home/a30076323/public_html/php_scp_project
+    - /bin/cp -R src/* $DEPLOYPATH
