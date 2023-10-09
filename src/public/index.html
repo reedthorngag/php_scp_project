@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <link type="text/css" rel="stylesheet" href="./css/css.css">
+      <script type="text/javascript" src="./js/script.js"></script>
+      <title>SCP Foundation</title>
+    </head>
+    <body>
+        <div>
+            <header-container>
+                <header>
+                    <a href="/" class="logo">
+                        <img src="./images/SCP-logo.png" alt="SCP foundation logo">
+                        <logo-text>SCP Foundation</logo-text>
+                    </a>
+                    <search>
+                        <img class="search-icon" src="./images/search-icon.png" alt="search icon">
+                        <form class="search-form" onsubmit="search();return false;">
+                            <input type="text" id="search-input" class="search-input" placeholder="Search...">
+                        </form>
+                    </search>
+                    <profile id="profile">
+                        <button onclick="showlogin()">Login</button>
+                        <button class="signup" onclick="showsignup()">Signup</button>
+                    </profile>
+                </header>
+            </header-container>
+            <banner id="banner">
+                <img src="./images/SCP-banner.jpg" alt="SCP Foundation banner">
+            </banner>
+        </div>
+        <div class="content-container">
+            <content id="content">
+                <content-header></content-header>
+                <posts id="posts-feed">
+
+                </posts>
+            </content>
+            <!--sidebar>
+
+            </sidebar-->
+        </div>
+        <div id="tmp-storage"></div>
+        <login id="login">
+            <container>
+                <button class="close-button" onclick="hidelogin()">X</button>
+                <form class="login-form" onsubmit="submitLogin(this);return false;">
+                    <h2>Login</h2>
+
+                    <label for="email">Email: </label>
+                    <input type="text" id="email" placeholder="example@snowball.com">
+
+                    <label for="password">Password: </label>
+                    <input type="password" id="password" placeholder="************">
+
+                    <error-string class="form-error" id="login-error"></error-string>
+
+                    <div class="relative-width small-top-margin">
+                        <input type="submit" value="Login" class="button left primary-button">
+
+                        <input type="button" onclick="hidelogin();showsignup();" class="button right" value="Sign up">
+                    </div>
+
+                </form>
+            </container>
+        </login>
+        <signup id="signup">
+            <container>
+                <button class="close-button" onclick="hidesignup()">X</button>
+                <form class="login-form" onsubmit="submitSignup(this);return false;">
+                    <h2>Sign up</h2>
+
+                    <label for="name">Name: </label>
+                    <input type="text" id="name" placeholder="Your name">
+
+                    <label for="email">Email: </label>
+                    <input type="text" id="email1" placeholder="example@snowball.com">
+
+                    <label for="display-name">Display name: </label>
+                    <input type="text" id="display-name" placeholder="What everyone sees">
+
+                    <label for="dob">Date of birth: </label>
+                    <input type="date" id="dob"><br/>
+
+                    <label for="signup-password">Password: </label>
+                    <input type="password" id="signup-password" min="8" placeholder="************">
+
+                    <label for="confirm-password">Confirm password: </label>
+                    <input type="password" id="confirm-password" placeholder="************">
+
+                    <error-string class="form-error" id="signup-error"></error-string>
+
+                    <div class="relative-width small-top-margin">
+                        <input type="submit" value="signup" class="button left primary-button">
+
+                        <input type="button" onclick="hidesignup();showlogin();" class="button right" value="Login">
+                    </div>
+                </form>
+            </container>
+        </signup>
+        <div id="login-overlay" onclick="hidelogin()"></div>
+        <div id="signup-overlay" onclick="hidesignup()"></div>
+        <div id="error"></div>
+        <script type="text/javascript" src="./js/onload.js"></script>
+    </body>
+</html>
