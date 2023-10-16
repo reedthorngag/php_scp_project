@@ -1,16 +1,39 @@
 <?php
 
 function insert($table,$data,$types,...$fields) {
+    return modify('INSERT',$table,$data,$types,...$fields);
+}
+
+function update($table,$data,$types,...$fields) {
+    return modify('UPDATE',$table,$data,$types,...$fields);
+}
+
+function modify($operation,$table,$types,...$fields) {
     require_once "db_conn.php";
 
     $values = [];
     foreach ($fields as $field) $values += $data[$field];
 
-    $query = $conn->prepare("INSERT INTO ".$table." (".implode(',',$fields).") VALUES (".substr(str_repeat(',?',count($fields)),1).")");
+    $query = $conn->prepare($operation." INTO ".$table." (".implode(',',$fields).") VALUES (".substr(str_repeat(',?',count($fields)),1).")");
     $query->bind_param($types,...$fields);
 
     if ($query->execute()) {
         return true;
+    }
+    return false;
+}
+
+function select($table,$select_fields,$data,$types,...$fields) {
+    require_once "db_conn.php";
+
+    $values = [];
+    foreach ($fields as $field) $values += $data[$field];
+
+    $query = $conn->prepare("SELECT ".implode(',',$select_fields)." FROM ".$table." WHERE ".implode('=? OR ',$fields)."=?");
+    $query->bind_param($types,...$fields);
+
+    if ($query->execute()) {
+        return $query->get_result()->fetch_assoc();
     }
     return false;
 }
