@@ -4,8 +4,7 @@ function insert($table,$data,$types,...$fields) {
     require_once "db_conn.php";
 
     $values = array();
-    foreach ($fields as $field) $values += $data[$field];
-    die(0);
+    foreach ($fields as $field) $values[] = $data[$field];
 
     $query = $conn->prepare("INSERT INTO ".$table." (".implode(',',$fields).") VALUES (".substr(str_repeat(',?',count($fields)),1).")");
     $query->bind_param($types,...$fields);
@@ -26,7 +25,7 @@ function select($table,$select_fields,$data,$types,...$fields) {
     require_once "db_conn.php";
 
     $values = array();
-    foreach ($fields as $field) $values += $data[$field];
+    foreach ($fields as $field) $values[] = $data[$field];
 
     $query = $conn->prepare("SELECT ".implode(',',$select_fields)." FROM ".$table." WHERE ".implode('=? OR ',$fields)."=?");
     $query->bind_param($types,...$fields);
