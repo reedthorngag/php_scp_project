@@ -5,6 +5,7 @@ function insert($table,$data,$types,...$fields) {
 
     $values = array();
     foreach ($fields as $field) $values += $data[$field];
+    die(0);
 
     $query = $conn->prepare("INSERT INTO ".$table." (".implode(',',$fields).") VALUES (".substr(str_repeat(',?',count($fields)),1).")");
     $query->bind_param($types,...$fields);
