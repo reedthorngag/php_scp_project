@@ -17,7 +17,7 @@ if (insert('subjects',$_POST,'sssss','subject','class','image','description','co
     die(0);
 }
 
-http_status_code(422);
+http_response_code(422);
 echo "You fucked up lol";
 $conn->close();
 
