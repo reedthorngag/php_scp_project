@@ -7,7 +7,7 @@ function insert($table,$data,$types,...$fields) {
     foreach ($fields as $field) $values[] = $data[$field];
 
     $query = $conn->prepare("INSERT INTO ".$table." (".implode(',',$fields).") VALUES (".substr(str_repeat(',?',count($fields)),1).")");
-    $query->bind_param($types,...$fields);
+    $query->bind_param($types,...$values);
 
     if ($query->execute()) {
         return true;
@@ -28,7 +28,7 @@ function select($table,$select_fields,$data,$types,...$fields) {
     foreach ($fields as $field) $values[] = $data[$field];
 
     $query = $conn->prepare("SELECT ".implode(',',$select_fields)." FROM ".$table." WHERE ".implode('=? OR ',$fields)."=?");
-    $query->bind_param($types,...$fields);
+    $query->bind_param($types,...$values);
 
     if ($query->execute()) {
         return $query->get_result()->fetch_assoc();
