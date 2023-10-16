@@ -14,10 +14,11 @@ if ($result) {
         $_SESSION['logged_in'] = true;
         $_SESSION['level'] = $result['access'];
         http_status_code(200);
+        $conn->close();
         die(0);
     }
 }
-
+$conn->close();
 http_status_code(401);
 
 ?>

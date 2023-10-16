@@ -13,11 +13,12 @@ require "utils/db.php";
 
 if (insert('subjects',$_POST,'sssss','subject','class','image','description','containment_info')) {
     echo 'Success!';
-    die(0);
-} else {
-    http_status_code(422);
-    echo "You fucked up lol";
+    $conn->close();
     die(0);
 }
+
+http_status_code(422);
+echo "You fucked up lol";
+$conn->close();
 
 ?>

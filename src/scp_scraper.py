@@ -103,18 +103,22 @@ db = {}
 
 # change these if you want mass scraping
 start = 2
-end = 25
+end = 3
 
 if (start != None and end != None):
     for i in range(start, end):
         db[str(i)] = scrape_scp(i)
 
-for i in range(start,end+1):
-    requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/create_post.php",data='{'+
-                  f'"subject":"{db[i]["id"]}",'+
-                  f'"class":"{db[i]["class"]}",'+
-                  f'"description":"{db[i]["description"]}",'+
-                  f'"containment_info":"{db[i]["containment"]}"'+"}",headers={"content-type":"text/JSON"})
+for i in range(start,end):
+    s = db[str(i)]
+    r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/create_subject.php",data=[
+                  ("subject",s["id"]),
+                  ("class",s["class"]),
+                  ("image","a"),
+                  ("description",s["description"]),
+                  ("containment_info",s["containment"])],headers={"content-type":"application/x-www-form-urlencoded"})
+    print(r.status_code)
+    print(r.content)
 
 print(f"Dictionary written to db successfully.")
 
