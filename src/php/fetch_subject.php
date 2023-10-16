@@ -1,4 +1,5 @@
 <?php
+include "errors.php";
 
 $result = select('subjects',['*'],$_GET,'s','subject');
 if (!$result) {

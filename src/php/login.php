@@ -1,4 +1,5 @@
 <?php
+include "errors.php";
 
 if (!check_set($_POST,'email','pass')){
     http_response_code(422);

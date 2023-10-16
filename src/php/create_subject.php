@@ -1,4 +1,6 @@
 <?php
+include "errors.php";
+
 require "utils/login.php";
 
 // check they have creation perm, which is everyone except level 5
