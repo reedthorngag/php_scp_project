@@ -1,20 +1,12 @@
 <?php
 
 function insert($table,$data,$types,...$fields) {
-    return modify('INSERT',$table,$data,$types,...$fields);
-}
-
-function update($table,$data,$types,...$fields) {
-    return modify('UPDATE',$table,$data,$types,...$fields);
-}
-
-function modify($operation,$table,$types,...$fields) {
     require_once "db_conn.php";
 
     $values = [];
     foreach ($fields as $field) $values += $data[$field];
 
-    $query = $conn->prepare($operation." INTO ".$table." (".implode(',',$fields).") VALUES (".substr(str_repeat(',?',count($fields)),1).")");
+    $query = $conn->prepare("INSERT INTO ".$table." (".implode(',',$fields).") VALUES (".substr(str_repeat(',?',count($fields)),1).")");
     $query->bind_param($types,...$fields);
 
     if ($query->execute()) {
@@ -22,6 +14,12 @@ function modify($operation,$table,$types,...$fields) {
     }
     return false;
 }
+
+function update($table,$data,$types,...$fields) {
+    echo 'implement this';
+    die(0);
+}
+
 
 function select($table,$select_fields,$data,$types,...$fields) {
     require_once "db_conn.php";
