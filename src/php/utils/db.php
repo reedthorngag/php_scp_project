@@ -2,6 +2,7 @@
 
 function insert($table,$data,$types,...$fields) {
     require_once "db_conn.php";
+    die(0);
 
     $values = [];
     foreach ($fields as $field) $values += $data[$field];
