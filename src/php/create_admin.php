@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 include "errors.php";
 
@@ -36,6 +35,7 @@ if (check_set($_POST,'email','pass','perms','auth')) {
     }
 }
 ?>
+<!DOCTYPE html>
 <html>
 
 <body>
