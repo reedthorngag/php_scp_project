@@ -4,8 +4,9 @@ include "errors.php";
 require "utils/utils.php";
 
 if (!check_set($_POST,'email','pass')){
-    http_response_code(422);
-    die(0);
+    //http_response_code(422);
+    //die(0);
+    return;
 }
 
 require "utils/db.php";
