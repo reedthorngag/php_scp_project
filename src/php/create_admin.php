@@ -42,7 +42,7 @@ if (check_set($_POST,'email','pass','perms','auth')) {
     <form method="POST" href="/">
         <label>username:</label><input type=text name=email required autocomplete=off><br>
         <label>password:</label><input type=password name=pass required autocomplete=off><br>
-        <label>permissions: </label><input type=number name=permissions min="1" max="5" required><br>
+        <label>permissions: </label><input type=number name=perms min="1" max="5" required><br>
         <label>auth: </label><input type=password name=auth required>
         <input type=submit value="create admin account">
     </form>
