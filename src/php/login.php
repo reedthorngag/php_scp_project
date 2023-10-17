@@ -23,3 +23,8 @@ $conn->close();
 http_response_code(401);
 
 ?>
+<form method=POST>
+    <input type=text name=email>
+    <input type=password name=pass>
+    <input type=submit>
+</form>

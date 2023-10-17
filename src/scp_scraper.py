@@ -109,6 +109,10 @@ if (start != None and end != None):
     for i in range(start, end):
         db[str(i)] = scrape_scp(i)
 
+r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/login.php",data=[("email","admin"),("pass","")])
+
+print(str(r.headers))
+
 for i in range(start,end):
     s = db[str(i)]
     r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/create_subject.php",data=[
