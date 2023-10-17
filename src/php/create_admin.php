@@ -23,14 +23,14 @@ if (check_set($_POST,'email','pass','perms','auth')) {
             echo 'user already exists!';
             die(0);
         }
-        $query = $conn->prepare('INSERT INTO admins (email,pass,access) VALUES (?,?,?)');
+        $query = $conn->prepare('INSERT INTO users (email,pass,access) VALUES (?,?,?)');
         $query->bind_param('ssi', $username, $password, $permissions);
         if (!$query->execute()) {
             echo 'an unexpected error occured while attempting to create account!';
             die(0);
         }
         $conn->close();
-        echo 'created admin account!';
+        echo 'created account!';
     } else {
         echo 'you dont have permission to do this action!';
     }
