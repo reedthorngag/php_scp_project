@@ -1,7 +1,7 @@
 <?php
 
 function require_login() {
-    start_session();
+    session_start();
 
     if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
         http_response_code(401);

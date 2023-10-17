@@ -111,8 +111,7 @@ if (start != None and end != None):
 
 r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/login.php",data=[("email","admin"),("pass","")])
 
-print(str(r._content))
-sys.exit(0)
+php_sess_id = r.headers['Set-Cookie'].split(';')[0].split('=')[1]
 
 for i in range(start,end):
     s = db[str(i)]
@@ -121,7 +120,8 @@ for i in range(start,end):
                   ("class",s["class"]),
                   ("image","a"),
                   ("description",s["description"]),
-                  ("containment_info",s["containment"])],headers={"content-type":"application/x-www-form-urlencoded"})
+                  ("containment_info",s["containment"])],headers={"content-type":"application/x-www-form-urlencoded"},
+                      cookies={"PHPSESSID":php_sess_id})
     print(r.status_code)
     print(r.content)
 
