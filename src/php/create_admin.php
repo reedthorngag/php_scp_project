@@ -5,6 +5,7 @@ require "utils/utils.php";
 session_start();
 
 if (check_set($_POST,'email','pass','perms','auth')) {
+    require "credentials.php";
     if ($_POST['auth']==$auth) {
         $username = $_POST['email'];
         $password = $_POST['pass'];
