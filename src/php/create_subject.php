@@ -15,12 +15,10 @@ require "utils/db.php";
 
 if (insert('subjects',$_POST,'sssss','subject','class','image','description','containment_info')) {
     echo 'Success!';
-    $conn->close();
     die(0);
 }
 
 http_response_code(422);
 echo "You fucked up lol";
-$conn->close();
 
 ?>
