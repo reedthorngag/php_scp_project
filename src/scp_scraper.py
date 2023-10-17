@@ -96,7 +96,7 @@ def scrape_scp(id):
     return result_dict
 
 #print(str(scrape_scp(2)))
-#import sys
+import sys
 #sys.exit(0)
 
 db = {}
@@ -111,7 +111,8 @@ if (start != None and end != None):
 
 r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/login.php",data=[("email","admin"),("pass","")])
 
-print(str(r.headers))
+print(str(r._content))
+sys.exit(0)
 
 for i in range(start,end):
     s = db[str(i)]

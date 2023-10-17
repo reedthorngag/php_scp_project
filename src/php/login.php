@@ -6,9 +6,9 @@ require "utils/utils.php";
 if (check_set($_POST,'email','pass')){
     require "utils/db.php";
 
-    $result = select('users',['password','access'],$_POST,'s','email');
+    $result = select('users',['pass','access'],$_POST,'s','email');
     if ($result) {
-        if (password_verify($_POST['pass'],$result['password'])) {
+        if (password_verify($_POST['pass'],$result['pass'])) {
             session_start();
             $_SESSION['logged_in'] = true;
             $_SESSION['level'] = $result['access'];
