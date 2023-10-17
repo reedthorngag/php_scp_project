@@ -13,11 +13,9 @@ if (check_set($_POST,'email','pass')){
             $_SESSION['logged_in'] = true;
             $_SESSION['level'] = $result['access'];
             http_response_code(200);
-            $conn->close();
             die(0);
         }
     }
-    $conn->close();
     http_response_code(401);
 }
 
