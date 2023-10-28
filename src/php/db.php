@@ -77,7 +77,7 @@ class DB {
 
         $values = array_values($where);
     
-        $query = $conn->prepare("SELECT ".implode(',',$select)." FROM ".$table." WHERE ".implode('=? OR ',$fields)."=?");
+        $query = $this->conn->prepare("SELECT ".implode(',',$select)." FROM ".$table." WHERE ".implode('=? OR ',$fields)."=?");
         $query->bind_param($types,...$values);
     
         if ($query->execute()) {
