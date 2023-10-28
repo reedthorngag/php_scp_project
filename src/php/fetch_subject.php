@@ -1,12 +1,20 @@
 <?php
 include "errors.php";
 
-$result = select('subjects',['*'],$_GET,'s','subject');
+if (!check_set($_GET,'subject')) {
+    http_response_code(422);
+    die(0);
+}
+
+require 'db.php';
+$db = new DB();
+
+$result = $db->select('subjects',['*'],'s',['subject'=>$_GET['subject']]);
 if (!$result) {
     http_response_code(404);
     die(0);
 }
 
-echo json_encode($result);
+echo json_encode($result->fetch_assoc());
 
 ?>

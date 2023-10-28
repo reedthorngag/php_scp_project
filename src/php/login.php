@@ -4,10 +4,11 @@ include "errors.php";
 require "utils/utils.php";
 
 if (check_set($_POST,'email','pass')){
-    require "utils/db.php";
+    require "db.php";
 
-    $result = select('users',['pass','access'],$_POST,'s','email');
+    $result = $db->select('users',['pass','access'],'s',['email'=>$_POST['email']]);
     if ($result) {
+        $result = $result->fetch_assoc();
         if (password_verify($_POST['pass'],$result['pass'])) {
             session_start();
             $_SESSION['logged_in'] = true;
