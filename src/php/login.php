@@ -14,10 +14,13 @@ if (check_set($_POST,'email','pass')){
             $_SESSION['logged_in'] = true;
             $_SESSION['level'] = $result['access'];
             http_response_code(200);
+            echo 'logged in!';
             die(0);
         }
     }
     http_response_code(401);
+    echo 'incorrect credentials!';
+    return;
 }
 
 ?>
