@@ -1,6 +1,8 @@
 <?php
 include "errors.php";
 
+require 'utils/utils.php';
+
 if (!check_set($_GET,'subject')) {
     http_response_code(422);
     die(0);
