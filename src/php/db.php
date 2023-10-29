@@ -71,7 +71,7 @@ class DB {
      * @param string    $types  the types of the data to be inserted (e.g. "ssii" for string,string,int,int)
      * @param array     $where  the data to be inserted with the field as the key (e.g. ['email'=>$email])
      */
-    function select($table,$select,$types,$where) {
+    function select(string $table,array $select,string $types,array $where) {
     
         $fields = array_keys($where);
 
@@ -84,6 +84,10 @@ class DB {
             return $query->get_result();
         }
         return false;
+    }
+
+    function select_all(string $table, array $select) {
+        return $this->conn->query("SELECT ".implode(',',$select)." FROM ".$table);
     }
 
 }
