@@ -38,7 +38,7 @@ class DB {
 
         $values = array_values($data);
     
-        $query = $this->conn->prepare("INSERT INTO ".$table." (".implode(',',$fields).") VALUES (?".str_repeat(',?',count($fields-1)).")");
+        $query = $this->conn->prepare("INSERT INTO ".$table." (".implode(',',$fields).") VALUES (?".str_repeat(',?',count($fields)-1).")");
         $query->bind_param($types,...$values);
     
         if ($query->execute()) {

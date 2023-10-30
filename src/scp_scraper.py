@@ -109,8 +109,9 @@ if (start != None and end != None):
     for i in range(start, end):
         db[str(i)] = scrape_scp(i)
 
-r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/login.php",data=[("email","admin"),("pass","")])
+r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/login.php",data=[("email","admin"),("pass",input("enter password: "))])
 
+print(str(r.status_code))
 php_sess_id = r.headers['Set-Cookie'].split(';')[0].split('=')[1]
 
 for i in range(start,end):
