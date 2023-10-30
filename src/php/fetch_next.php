@@ -17,6 +17,6 @@ if (!$query->execute()) {
 }
 
 header('Content-Type: application/json');
-echo json_encode($query->get_result()->fetch_assoc());
+echo json_encode($query->get_result()->fetch_all());
 
 ?>
