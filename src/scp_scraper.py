@@ -103,7 +103,7 @@ db = {}
 
 # change these if you want mass scraping
 start = 2
-end = 3
+end = 50
 
 if (start != None and end != None):
     for i in range(start, end):
