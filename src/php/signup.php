@@ -5,6 +5,8 @@ if(!check_set($_POST,'email','password')) {
     die(0);
 }
 
+require 'db.php';
 
+if (!$db->insert('users','ss',[]))
 
 ?>

@@ -274,7 +274,7 @@ async function connectionError(string) {
 async function ping() {
     return new Promise((resolve) => {
         const req = new XMLHttpRequest();
-        req.open('/api/ping','GET');
+        req.open('./php/ping.php','GET');
         req.onload = () => resolve(req.status)
         req.onerror = () => resolve(0);
         req.send();
@@ -328,11 +328,11 @@ function loadNext(retry) {
  */
 function loadPost(data) {
 
-    if (data.Type !== 'TEXT' && data.Type !== 'IMAGE') return; // only text and images are supported so far
+    if (data.type !== 'TEXT' && data.type !== 'IMAGE') return; // only text and images are supported so far
 
     const readButton = document.createElement('button');
     readButton.innerText = "Read description out loud.";
-    const description = data.Description;
+    const description = data.description;
     readButton.onclick = (e) => {
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(new SpeechSynthesisUtterance(description));
@@ -341,31 +341,30 @@ function loadPost(data) {
 
     // first build the info header (saying the community and who posted it)
     const communityElem = document.createElement('community');
-    communityElem.innerText = data.Community.Name;
+    communityElem.innerText = data.community;
     const authorElem = document.createElement('author');
-    authorElem.innerText = data.Author.DisplayName;
+    authorElem.innerText = data.author;
     const infoElem = document.createElement('post-header');
     infoElem.append('Community: ',communityElem,' Author: ',authorElem,readButton);
 
     // then create the post data, title + body
     const titleElem = document.createElement('title');
-    titleElem.innerText = data.Title;
+    titleElem.innerText = data.subject;
     let imgElem;
-    if (data.Type === 'IMAGE' && data.Url) {
+    if (data.type === 'IMAGE' && data.image) {
         imgElem = document.createElement('img');
-        imgElem.src = './images/'+data.Url;
+        imgElem.src = './images/'+data.image;
         imgElem.alt = 'post image';
     }
     const bodyPreviewElem = document.createElement('body');
-    data.Body = data.Body.replace("${description}",data.Description);
-    bodyPreviewElem.innerText = data.Body.length > 256 ? data.Body.slice(0,256)+'...' : data.Body;
+    bodyPreviewElem.innerText = data.description.length > 256 ? data.description.slice(0,256)+'...' : data.description;
 
     // then build the post from those
     const post = document.createElement('post');
     post.append(infoElem,titleElem,imgElem ?? '',bodyPreviewElem);
 
     // add event listeners
-    const [authorID, communityID, postID] = [data.Author.UserID, data.Community.CommunityID, data.PostID];
+    const [authorID, communityID, postID] = [data.author, data.community, data.subject];
 
     post.onclick = (event) => {
         displayPost(post,postID,true);
@@ -392,14 +391,14 @@ let oldScrollPos = 0; // scroll pos to go to when switching back to feed
  * switches the page content to a specific post and saves old content for
  * fast return to feed also saves scroll position
  * 
- * @param {HTMLElement} post  post element that was clicked on
- * @param {string} postID  id of the post that was clicked on
- * @param {boolean} save  whether to save old state or not
+ * @param {HTMLElement} post    post element that was clicked on
+ * @param {string}      postID  id of the post that was clicked on
+ * @param {boolean}     save    whether to save old state or not
  */
 function displayPost(post,postID,save) {
 
     const req = new XMLHttpRequest();
-    req.open('GET','/api/fetch/post?id='+postID);
+    req.open('GET','php/fetch_subject.php?subject='+postID);
     req.onload = () => {
         
         switch (req.status) {
@@ -430,11 +429,11 @@ function displayPost(post,postID,save) {
 
         const data = JSON.parse(req.response);
 
-        if (data.Type !== 'TEXT' && data.Type !== 'IMAGE') return; // only text and images are supported so far
+        if (data.type !== 'TEXT' && data.type !== 'IMAGE') return; // only text and images are supported so far
 
         const readButton = document.createElement('button');
         readButton.innerText = "Read description out loud.";
-        const description = data.Description;
+        const description = data.description;
         readButton.onclick = (e) => {
             window.speechSynthesis.cancel();
             window.speechSynthesis.speak(new SpeechSynthesisUtterance(description));
@@ -443,24 +442,24 @@ function displayPost(post,postID,save) {
 
         // first build the header (saying the community and who posted it and a back button)
         const communityElem = document.createElement('community');
-        communityElem.innerText = data.Community.Name;
+        communityElem.innerText = data.community;
         const authorElem = document.createElement('author');
-        authorElem.innerText = data.Author.DisplayName;
+        authorElem.innerText = data.author;
         const infoElem = document.createElement('post-header');
         infoElem.append('Community: ',communityElem,' Author: ',authorElem,readButton);
 
         // then create the post data, title + body
         const titleElem = document.createElement('title');
-        titleElem.innerText = data.Title;
+        titleElem.innerText = data.subject;
         let imgElem;
-        if (data.Type === 'IMAGE' && data.Url) {
+        if (data.Type === 'IMAGE' && data.image) {
             imgElem = document.createElement('img');
-            imgElem.src = './images/'+data.Url;
+            imgElem.src = './images/'+data.image;
             imgElem.alt = 'post image';
         }
 
         const bodyPreviewElem = document.createElement('body');
-        bodyPreviewElem.innerText = data.Body.replace("${description}",data.Description);
+        bodyPreviewElem.innerText = data.description;
 
         const backbutton = document.createElement('back-button');
 
@@ -469,7 +468,7 @@ function displayPost(post,postID,save) {
         post.append(backbutton,infoElem,titleElem,imgElem ?? '',bodyPreviewElem);
 
         // add event listeners
-        const [authorID, communityID, postID] = [data.Author.UserID, data.Community.CommunityID, data.PostID];
+        const [authorID, communityID, postID] = [data.author, data.community, data.subject];
 
         backbutton.onclick = (event) => {
             goBack();
