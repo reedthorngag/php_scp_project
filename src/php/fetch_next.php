@@ -9,8 +9,8 @@ if (!check_set($_GET,'skip')) {
 
 require 'db.php';
 
-$query = $db->conn->prepare('SELECT * FROM subjects LIMIT 10 OFFSET ?');
-$query->bind_param('i',$_GET['skip']);
+$query = $db->conn->prepare('SELECT * FROM subjects');
+//$query->bind_param('i',$_GET['skip']);
 if (!$query->execute()) {
     http_response_code(500);
     die(0);
