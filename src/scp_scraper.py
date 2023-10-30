@@ -99,32 +99,32 @@ def scrape_scp(id):
 import sys
 #sys.exit(0)
 
-db = {}
-
-# change these if you want mass scraping
 start = 2
-end = 50
-
-if (start != None and end != None):
-    for i in range(start, end):
-        db[str(i)] = scrape_scp(i)
+count = 30
+scp = start
 
 r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/login.php",data=[("email","admin"),("pass",input("enter password: "))])
 
 print(str(r.status_code))
 php_sess_id = r.headers['Set-Cookie'].split(';')[0].split('=')[1]
 
-for i in range(start,end):
-    s = db[str(i)]
-    r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/create_subject.php",data=[
-                  ("subject",s["id"]),
-                  ("class",s["class"]),
-                  ("image","a"),
-                  ("description",s["description"]),
-                  ("containment_info",s["containment"])],headers={"content-type":"application/x-www-form-urlencoded"},
-                      cookies={"PHPSESSID":php_sess_id})
-    print(r.status_code)
-    print(r.content)
+n = start
+while (n<start+count):
+    try:
+        s = scrape_scp(scp)
+        r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/create_subject.php",data=[
+                    ("subject",s["id"]),
+                    ("class",s["class"]),
+                    ("image","a"),
+                    ("description",s["description"]),
+                    ("containment_info",s["containment"])],headers={"content-type":"application/x-www-form-urlencoded"},
+                        cookies={"PHPSESSID":php_sess_id})
+        print(r.status_code)
+        print(r.content)
+        n += 1
+    except:
+        pass
+    scp += 1
 
 print(f"Dictionary written to db successfully.")
 

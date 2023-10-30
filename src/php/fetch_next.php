@@ -16,6 +16,6 @@ if (!$query->execute()) {
     die(0);
 }
 
-echo json_encode($query->get_result());
+echo json_encode($query->get_result().fetch_assoc());
 
 ?>
