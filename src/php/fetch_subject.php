@@ -17,7 +17,7 @@ if (!$result) {
     die(0);
 }
 
-header('Content-Type: text/json');
+header('Content-Type: application/json');
 echo json_encode($result->fetch_assoc());
 
 ?>
