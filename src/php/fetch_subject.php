@@ -17,6 +17,7 @@ if (!$result) {
     die(0);
 }
 
+header('Content-Type: text/json');
 echo json_encode($result->fetch_assoc());
 
 ?>

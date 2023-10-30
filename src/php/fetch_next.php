@@ -16,6 +16,7 @@ if (!$query->execute()) {
     die(0);
 }
 
+header('Content-Type: text/json');
 echo json_encode($query->get_result()->fetch_assoc());
 
 ?>
