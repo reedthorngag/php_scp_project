@@ -11,9 +11,9 @@ if (!check_set($_GET,'subject')) {
 require 'db.php';
 $db = new DB();
 
-$result = $db->update('subjects','s',['subject'=>$_GET['subject']]);
+$result = $db->update('subjects','s',['subject'=>$_POST['subject'],'image'=>$_POST['image']],'s',['subject'=>$_GET['subject']]);
 if (!$result) {
-    http_response_code(404);
+    http_response_code(422);
     die(0);
 }
 

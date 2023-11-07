@@ -12,7 +12,7 @@ require 'db.php';
 $query = $db->conn->prepare('SELECT * FROM subjects WHERE description LIKE ? OR subject LIKE ? LIMIT 10 OFFSET ?');
 $query->bind_param('si','*'.$_GET['param'].'*',$_GET['skip']);
 if (!$query->execute()) {
-    http_response_code(500);
+    http_response_code(422);
     die(0);
 }
 
