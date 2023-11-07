@@ -56,9 +56,23 @@ class DB {
      * @param string    $types  the types of the data to be inserted (e.g. "ssii" for string,string,int,int)
      * @param array     $data   the data to be inserted with the field as the key (e.g. ['email'=>$email])
      */
-    function update(string $table,string $types,array $data) {
-        echo 'implement this';
-        die(0);
+    function update(string $table,string $types,array $data,string $where_types,array $where) {
+        
+        $fields = array_keys($data);
+
+        $values = array_values($data);
+
+        $where_fields = array_keys($where);
+
+        $where_values = array_values($where);
+
+        $query = $this->conn->prepare("UPDATE ".$table." SET ".implode('=?,',$fields)."=? WHERE ".implode('=?,',$fields)."=?");
+        $query->bind_param($types+$where_types,...array_merge($values,$where_values));
+    
+        if ($query->execute()) {
+            return true;
+        }
+        return false;
     }
 
     /**
