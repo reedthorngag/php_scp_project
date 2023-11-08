@@ -2,10 +2,8 @@
 include "errors.php";
 
 require 'utils/utils.php';
-if (!check_set($_GET,'skip')) {
-    http_response_code(422);
-    die(0);
-}
+
+require_set($_GET,'skip');
 
 require 'db.php';
 
