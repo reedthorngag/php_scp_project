@@ -104,7 +104,7 @@ function submitLogin(form) {
     }
 
     const req = new XMLHttpRequest();
-    req.open('POST','/php_scp_project/src/php/login.php');
+    req.open('POST','../php/login.php');
     req.setRequestHeader('Content-type','application/json');
     req.onload = () => {
 
@@ -197,7 +197,7 @@ function submitSignup(form) {
 
 
     const req = new XMLHttpRequest();
-    req.open('POST','/php_scp_project/src/php/signup.php');
+    req.open('POST','../php/signup.php');
     req.setRequestHeader('Content-type','application/json');
     req.onload = () => {
 
@@ -274,7 +274,7 @@ async function connectionError(string) {
 async function ping() {
     return new Promise((resolve) => {
         const req = new XMLHttpRequest();
-        req.open('/php_scp_project/src/php/ping.php','GET');
+        req.open('../php/ping.php','GET');
         req.onload = () => resolve(req.status)
         req.onerror = () => resolve(0);
         req.send();
@@ -398,7 +398,7 @@ let oldScrollPos = 0; // scroll pos to go to when switching back to feed
 function displayPost(post,postID,save) {
 
     const req = new XMLHttpRequest();
-    req.open('GET','/php_scp_project/src/php/fetch_subject.php?subject='+postID);
+    req.open('GET','../php/fetch_subject.php?subject='+postID);
     req.onload = () => {
         
         switch (req.status) {
@@ -520,7 +520,7 @@ function search() {
 
     if (!searchString) return;
 
-    currURI = '/php_scp_project/src/php/search.pho?param='+encodeURIComponent(searchString)+'&skip=';
+    currURI = '../php/search.pho?param='+encodeURIComponent(searchString)+'&skip=';
 
     let req = new XMLHttpRequest();
     req.open('GET', currURI+0);

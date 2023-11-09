@@ -11,16 +11,12 @@ document.addEventListener('scroll', scrollHandler);
 
 let userID;
 
-if (document.cookie.includes('auth=')) {
-    loadProfile()
-} else {
-    console.log('not logged in!');
-}
+loadProfile()
 
 function loadProfile() {
 
     let req = new XMLHttpRequest();
-    req.open('GET', '/php_scp_project/src/php/profile.php');
+    req.open('GET', '../php/profile.php');
     req.onload = () => {
         switch (req.status) {
             case 200:
