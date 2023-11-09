@@ -47,5 +47,5 @@ function loadProfile() {
 
 }
 
-currURI = '/php_scp_project/src/php/fetch_next?skip=';
+currURI = '../php/fetch_next.php?skip=';
 loadNext(true);
