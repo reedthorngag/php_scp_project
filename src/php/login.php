@@ -14,7 +14,6 @@ if (check_set($_POST,'email','pass')){
             $_SESSION['logged_in'] = true;
             $_SESSION['level'] = $result['access'];
             $_SESSION['username'] = $result['username'];
-            http_response_code(400);
             echo $result['username'].'\n'.$result['access'];
             die(0);
         }
