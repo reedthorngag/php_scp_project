@@ -20,7 +20,7 @@ if (document.cookie.includes('auth=')) {
 function loadProfile() {
 
     let req = new XMLHttpRequest();
-    req.open('GET', '../php/profile.php');
+    req.open('GET', '/php_scp_project/src/php/profile.php');
     req.onload = () => {
         switch (req.status) {
             case 200:
@@ -47,5 +47,5 @@ function loadProfile() {
 
 }
 
-currURI = '../php/fetch_next?skip=';
+currURI = '/php_scp_project/src/php/fetch_next?skip=';
 loadNext(true);
