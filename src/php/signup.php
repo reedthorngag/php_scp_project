@@ -1,4 +1,5 @@
 <?php
+include "errors.php";
 
 require_set($_POST,'username','email','password');
 
