@@ -66,7 +66,10 @@ class DB {
 
         $where_values = array_values($where);
 
-        $query = $this->conn->prepare("UPDATE ".$table." SET ".implode('=?,',$fields)."=? WHERE ".implode('=?,',$fields)."=?");
+        $query = "UPDATE ".$table." SET (".implode('=?,',$fields)."=?) WHERE ".implode('=?,',$fields)."=?";
+        echo $query;
+
+        $query = $this->conn->prepare($query);
         $query->bind_param($types+$where_types,...array_merge($values,$where_values));
     
         if ($query->execute()) {
