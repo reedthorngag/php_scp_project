@@ -130,6 +130,7 @@ function submitLogin(form) {
         error('Request failed! Check your internet and try again.');
     };
     req.send('email='+encodeURIComponent(form['0'].value)+'&pass='+encodeURIComponent(form['1'].value));
+}
 
 function loginError(string) {
     document.getElementById('login-error').style.display = 'block';
