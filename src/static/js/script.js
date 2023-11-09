@@ -155,8 +155,6 @@ function submitSignup(form) {
         return;
     }
 
-    console.log(form);
-
     // name validation
     if (form[0].value.length > 48) {
         form[0].classList.add('input-error');
@@ -177,14 +175,14 @@ function submitSignup(form) {
     }
 
     // password validation
-    if (form[3].length < 11) {
-        form[1].classList.add('input-error');
+    if (form[4].length < 11) {
+        form[4].classList.add('input-error');
         signupError('Password must be 11 characters or more');
         return;
     }
 
-    if (form[3].value != form[4].value) {
-        form[4].classList.add('input-error');
+    if (form[4].value != form[5].value) {
+        form[5].classList.add('input-error');
         signupError('Passwords dont\'t match');
         return;
     }
