@@ -377,45 +377,14 @@ function editPost(data,createNew) {
 
     const post = document.createElement('post');
 
-    const saveButton = document.createElement('button');
-    saveButton.innerText = createNew ? "Create" : "Save";
-    saveButton.onclick = (e) => {
-        console.log("what?");
-        createNew ? submitPost() : submitEdit(data);
-    }
-
-    const cancelButton = document.createElement('button');
-    cancelButton.innerText = createNew ? "Discard" : "Cancel";
-    cancelButton.classList.add('danger-button');
-    cancelButton.onclick = (e) => createNew ? goBack() : displayPost(data.subject,false);
-
-
-    const infoElem = document.createElement('post-header');
-
-    if (!createNew) {
-        const communityElem = document.createElement('community');
-        communityElem.innerText = data.community;
-        const authorElem = document.createElement('author');
-        authorElem.innerText = data.author;
-
-        communityElem.onclick = () => displayCommunity(communityID,false);
-        authorElem.onclick = () => displayUserProfile(authorID,false);
-
-        infoElem.append('Community: ',communityElem,' Author: ',authorElem);
-    }
-
-    const backButton = document.createElement('back-button');
-    backButton.onclick = (e) => {
-        console.log("wegthrygf");
-        //createNew ? goBack() : displayPost(data.subject,false);
-        e.stopPropagation();
-    }
-
-    infoElem.append(cancelButton,saveButton);
-
-    post.append(backButton, infoElem);
-
+    // had to write all of it as raw html because javascript sucks ass
+    // and perfectly valid onclick handlers werent working
     post.innerHTML += `
+        <back-button onclick="${createNew ? 'goBack()' : 'displayPost(\''+data.subject+'\',false)'};"></back-button>
+        ${createNew ? '' : '<post-header>'+
+            'Community: <community id=community onclick="displayCommunity(\''+data.community+'\',false);"></community>'+
+            ' Author: <author id=author onclick="displayProfile(\''+data.author+'\',false)></author>'+
+        '</post-header>'}
         ${createNew ? '' : '<title> id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
             ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : ''}
@@ -433,6 +402,8 @@ function editPost(data,createNew) {
     content.appendChild(post);
 
     if (!createNew) {
+        document.getElementById('community').innerText = data.community;
+        document.getElementById('author').innerText = data.author;
         document.getElementById('subject').innerText = data.subject;
         document.getElementById('image').innerText = data.image ?? "";
         document.getElementById('description').innerText = data.description;
