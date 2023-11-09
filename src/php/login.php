@@ -18,7 +18,7 @@ if (check_set($_POST,'email','pass')){
             die(0);
         }
     }
-    //http_response_code(401);
+    http_response_code(401);
     echo 'incorrect credentials!';
     return;
 }
