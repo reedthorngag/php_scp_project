@@ -381,12 +381,13 @@ function editPost(data,createNew) {
     // and perfectly valid onclick handlers werent working
     post.innerHTML += `
         <back-button onclick="${createNew ? 'goBack()' : 'displayPost(\''+data.subject+'\',false)'};"></back-button>
-            ${createNew ? '' : '<post-header>'+
+        <post-header>
+            ${createNew ? '' : ''+
                 'Community: <community id=community onclick="displayCommunity(\''+data.community+'\',false);"></community>'+
-                ' Author: <author id="author" onclick="displayProfile(\''+data.author+'\',false)"></author>'+
-                '<button onclick="'+(createNew ? 'submitPost()">Post':'submitEdit(\''+data.subject+'\')">Update')+'</button>'+
-                '<button class="danger-button" onclick="'+(createNew ? 'goBack()">Discard':'displayPost(\''+data.subject+'\',false)">Cancel')+'</button>'+
-        '</post-header>'}
+                ' Author: <author id="author" onclick="displayProfile(\''+data.author+'\',false)"></author>'}
+                <button onclick="${createNew ? 'submitPost()">Post':'submitEdit(\''+data.subject+'\')">Update'}</button>
+                <button class="danger-button" onclick="${createNew ? 'goBack()">Discard':'displayPost(\''+data.subject+'\',false)">Cancel'}</button>
+        </post-header>
         ${createNew ? '' : '<title id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
             ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : ''}
