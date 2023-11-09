@@ -384,6 +384,8 @@ function editPost(data,createNew) {
             ${createNew ? '' : '<post-header>'+
                 'Community: <community id=community onclick="displayCommunity(\''+data.community+'\',false);"></community>'+
                 ' Author: <author id="author" onclick="displayProfile(\''+data.author+'\',false)"></author>'+
+                '<button onclick="'+(createNew ? 'submitPost()">Post':'submitEdit(\''+data.subject+'\')">Update')+'</button>'+
+                '<button class="danger-button" onclick="'+(createNew ? 'goBack()">Discard':'displayPost(\''+data.subject+'\',false)">Cancel')+'</button>'+
         '</post-header>'}
         ${createNew ? '' : '<title id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
@@ -414,7 +416,7 @@ function editPost(data,createNew) {
     }
 }
 
-function submitEdit(data) {
+function submitEdit(subject) {
     const form = document.getElementById('edit-post');
 
     let failed = false;
@@ -435,7 +437,7 @@ function submitEdit(data) {
 
         switch (req.status) {
             case 200:
-                displayPost(data.subject,false);
+                displayPost(subject,false);
                 break;
             case 404:
                 error('Subject not found! (stop messing with stuff).');
@@ -454,7 +456,7 @@ function submitEdit(data) {
     req.onerror = () => {
         error('Request failed! Check your internet and try again.');
     };
-    req.send(`subject=${encodeURIComponent(data.subject)}`+
+    req.send(`subject=${encodeURIComponent(subject)}`+
             `&type=${encodeURIComponent(form[1].value ? "IMAGE" : "TEXT")}`+
             `&class=${encodeURIComponent(form[0].value)}`+
             `&image=${encodeURIComponent(form[1].value)}`+
