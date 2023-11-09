@@ -20,14 +20,12 @@ if (document.cookie.includes('auth=')) {
 function loadProfile() {
 
     let req = new XMLHttpRequest();
-    req.open('GET', '/api/profile');
+    req.open('GET', '../php/profile.php');
     req.onload = () => {
-
         switch (req.status) {
             case 200:
                 break;
             case 401:
-                document.cookie = 'auth=; path=/; max-age=-99; Samesite=Strict;'
                 return;
             default:
                 error('Failed to fetch profile! check internet and reload.');
@@ -38,7 +36,7 @@ function loadProfile() {
 
         document.getElementById('profile').innerHTML = '<user><span id="name"></span><dropdown-arrow>&lt</dropdown-arrow></user>';
 
-        document.getElementById('name').innerText = profile.DisplayName;
+        document.getElementById('name').innerText = profile.username;
 
     }
     req.onerror = () => {
@@ -49,5 +47,5 @@ function loadProfile() {
 
 }
 
-currURI = '/api/fetch/next?skip=';
+currURI = '../php/fetch_next?skip=';
 loadNext(true);
