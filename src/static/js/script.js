@@ -629,16 +629,19 @@ function displayPost(postID,save) {
             imgElem.alt = 'post image';
         }
 
-        const bodyPreviewElem = document.createElement('body');
-        bodyPreviewElem.innerText = data.description;
-        bodyPreviewElem.innerHTML += '<br><br>';
-        bodyPreviewElem.innerText += data.containment_info;
+        const bodyElem = document.createElement('body');
+        const description = document.createElement('p');
+        description.innerText = data.description;
+        const con_info = document.createElement('p');
+        con_info.innerText += data.containment_info;
+
+        bodyElem.append(description,con_info);
 
         const backbutton = document.createElement('back-button');
 
         // then build the post from those
         const post = document.createElement('post');
-        post.append(backbutton,infoElem,titleElem,classElem,imgElem ?? '',bodyPreviewElem);
+        post.append(backbutton,infoElem,titleElem,classElem,imgElem ?? '',bodyElem);
 
         // add event listeners
         const [authorID, communityID, postID] = [data.author, data.community, data.subject];
