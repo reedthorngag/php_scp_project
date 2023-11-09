@@ -5,7 +5,6 @@ require "utils/utils.php";
 
 http_response_code(422);
 echo "hi?";
-var_dump($_POST);
 
 if (check_set($_POST,'email','pass')){
     require "db.php";
