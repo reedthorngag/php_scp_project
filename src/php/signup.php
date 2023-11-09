@@ -19,7 +19,7 @@ if ($db->select('users',['email'],'s',['email'=>$_POST['email']])->num_rows != 0
     die(0);
 }
 
-if (!$db->insert('users','ss',['username'=>$_POST['username'],'email'=>$_POST['email'],'password'=>password_hash($_POST['password'])])) {
+if (!$db->insert('users','ss',['username'=>$_POST['username'],'email'=>$_POST['email'],'password'=>password_hash($_POST['password'],PASSWORD_DEFAULT)])) {
     http_response_code(422);
     echo 'user creation failed, probably your fault.';
 }
