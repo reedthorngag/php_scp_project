@@ -3,6 +3,7 @@ include "errors.php";
 
 require "utils/utils.php";
 
+http_response_code(422);
 echo "hi?";
 var_dump($_POST);
 
