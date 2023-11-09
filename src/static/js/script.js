@@ -109,7 +109,7 @@ function submitLogin(form) {
     req.onload = () => {
 
         switch (req.status) {
-            case 200:
+            case 400:
                 window.localStorage.setItem('username',req.responseText.split('\n')[0]);
                 window.localStorage.setItem('level',parseInt(req.responseText.split('\n')[1]));
                 window.location.reload();
