@@ -13,6 +13,6 @@ function login() {
         }
     };
 
-    request.send('{"username":"'+username+'","password":"'+password+'"}');
+    request.send('email='+encodeURIComponent(username)+'&pass='+encodeURIComponent(password));
     return false;
 }
