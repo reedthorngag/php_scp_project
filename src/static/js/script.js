@@ -380,10 +380,12 @@ function editPost(data,createNew) {
     // had to write all of it as raw html because javascript sucks ass
     // and perfectly valid onclick handlers werent working
     post.innerHTML += `
-        <back-button onclick="${createNew ? 'goBack()' : 'displayPost(\''+data.subject+'\',false)'};"></back-button>
-        ${createNew ? '' : '<post-header>'+
-            'Community: <community id=community onclick="displayCommunity(\''+data.community+'\',false);"></community> Author: <author id=author onclick="displayProfile(\''+data.author+'\',false)></author>'+
-        '</post-header>'}`;
+        <back-button onclick="${createNew ? 'goBack()' : 'displayPost(\''+data.subject+'\',false)'};"></back-button>`
+    
+    post.innerHTML += createNew ? '' : `<post-header>
+Community: <community id=community onclick="displayCommunity('${data.community}',false);"></community>
+ Author: <author id=author onclick="displayProfile('${data.author}',false)></author>
+        </post-header>'`
     post.innerHTML += `
         ${createNew ? '' : '<title id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
