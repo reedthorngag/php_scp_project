@@ -379,15 +379,15 @@ function editPost(data,createNew) {
 
     // had to write all of it as raw html because javascript sucks ass
     // and perfectly valid onclick handlers werent working
-    post.innerHTML += `
+    /*post.innerHTML += `
         <back-button onclick="${createNew ? 'goBack()' : 'displayPost(\''+data.subject+'\',false)'};"></back-button>`
     
     post.innerHTML += createNew ? '' : `<post-header>
 Community: <community id=community onclick="displayCommunity('${data.community}',false);"></community>
- Author: `
-    post.innerHTML += `<author id=author onclick="displayProfile('${data.author}',false)></author>
-        </post-header>'`
-    post.innerHTML += `
+ Author: `*/
+    post.innerHTML += `<author id=author onclick="displayProfile('${data.author}',false)></author>`
+        //</post-header>'`
+    /*post.innerHTML += `
         ${createNew ? '' : '<title id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
             ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : ''}
@@ -400,7 +400,7 @@ Community: <community id=community onclick="displayCommunity('${data.community}'
             <label for="containment-info">Containment info</label><br>
             <textarea style="max-width:80%" id="description" rows="8" cols="60"></textarea><br>
         </form>
-    `;
+    `;*/
 
     content.appendChild(post);
 
