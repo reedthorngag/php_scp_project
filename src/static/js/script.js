@@ -405,7 +405,10 @@ function editPost(data,createNew) {
     }
 
     const backButton = document.createElement('back-button');
-    backButton.onclick = () => createNew ? goBack() : displayPost(data.subject,false);
+    backButton.onclick = (e) => {
+        createNew ? goBack() : displayPost(data.subject,false);
+        e.stopPropagation();
+    }
 
     infoElem.append(cancelButton,saveButton);
 
