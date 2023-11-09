@@ -558,6 +558,7 @@ function deletePost(data) {
     req.onerror = () => {
         error('Request failed! Check your internet and try again.');
     };
+    req.send();
 }
 
 
