@@ -387,7 +387,7 @@ function editPost(data,createNew) {
         '</post-header>'}
         ${createNew ? '' : '<title> id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
-            ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : ''}
+            ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : '<title id="subject"></title>'}
             <label for="class">Class</label><br>
             <input type="text" id="class"><br>
             <label for="image">Image URL</label><br>
