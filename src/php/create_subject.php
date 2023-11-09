@@ -5,7 +5,7 @@ require 'utils/utils.php';
 
 require_set($_POST,'subject','class','image','description','containment_info');
 
-require_perms(4);
+require_level(4);
 
 require "db.php";
 
