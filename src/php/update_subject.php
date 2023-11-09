@@ -22,8 +22,7 @@ if (!has_access(3) && ($author!=$_SESSION['username'] || $_SESSION['level']>5)) 
     die(0);
 }
 
-$result = $db->update('subjects','ss',[
-        'subject'=>$_POST['subject'],
+$result = $db->update('subjects','sssssss',[
         'type'=>$_POST['type'],
         'image'=>$_POST['image'],
         'author'=>$_SESSION['username'],
