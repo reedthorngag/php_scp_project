@@ -1,11 +1,6 @@
 <?php
 include "errors.php";
 
-require "utils/login.php";
-
-// check they have creation perm, which is everyone except level 5 & 6 (level 4 is default)
-require_level(4);
-
 require 'utils/utils.php';
 
 require_set($_POST,'subject','class','image','description','containment_info');
