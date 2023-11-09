@@ -407,7 +407,8 @@ function editPost(data,createNew) {
         document.getElementById('community').innerText = data.community;
         document.getElementById('author').innerText = data.author;
         document.getElementById('subject').innerText = data.subject;
-        document.getElementById('image').innerText = data.image ?? "";
+        document.getElementById('class').value = data.class;
+        document.getElementById('image').value = data.image ?? "";
         document.getElementById('description').innerText = data.description;
         document.getElementById('containment-info').innerText = data.containment_info;
     }
