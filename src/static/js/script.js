@@ -401,6 +401,8 @@ function editPost(data,createNew) {
 
     content.appendChild(post);
 
+    console.log(data);
+
     if (!createNew) {
         document.getElementById('community').innerText = data.community;
         document.getElementById('author').innerText = data.author;
