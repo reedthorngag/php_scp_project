@@ -404,8 +404,6 @@ function editPost(data,createNew) {
 
     content.appendChild(post);
 
-    console.log(data);
-
     if (!createNew) {
         document.getElementById('community').innerText = data.community;
         document.getElementById('author').innerText = data.author;
@@ -423,7 +421,7 @@ function submitEdit(subject) {
     let failed = false;
     for (let i = 0; i < 4; i++) {
         form[i].classList.remove('input-error');
-        if (!form[i].value) {
+        if (!form[i].value && i!==1) {
             form[i].classList.add('input-error');
             failed = true;
         }
@@ -457,13 +455,12 @@ function submitEdit(subject) {
     req.onerror = () => {
         error('Request failed! Check your internet and try again.');
     };
-    console.log(form);
     req.send(`subject=${encodeURIComponent(subject)}`+
             `&type=${encodeURIComponent(form[1].value ? "IMAGE" : "TEXT")}`+
             `&class=${encodeURIComponent(form[0].value)}`+
             `&image=${encodeURIComponent(form[1].value)}`+
-            `&description=${encodeURIComponent(form[2].innerText)}`+
-            `&containment_info=${encodeURIComponent(form[3].innerText)}"}`);
+            `&description=${encodeURIComponent(form[2].value)}`+
+            `&containment_info=${encodeURIComponent(form[3].value)}"}`);
     
     return false;
 }
@@ -474,7 +471,7 @@ function submitPost() {
     let failed = false;
     for (let i = 0; i < 5; i++) {
         form[i].classList.remove('input-error');
-        if (!form[i].value) {
+        if (!form[i].value && i!==2) {
             form[i].classList.add('input-error');
             failed = true;
         }
