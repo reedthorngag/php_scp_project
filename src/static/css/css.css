@@ -431,7 +431,7 @@ post class {
     height: fit-content;
     font-weight: 500;
     font-size: 2.8vmin;
-    margin: 0 0 0.5vmin 0 2vmin;
+    margin-left: 1vmin;
 }
 
 post img {
@@ -460,6 +460,11 @@ post #edit-post input[type=text] {
 
 post #edit-post textarea {
     margin-bottom: 1.5vmin;
+    border-color: #0000b0;
+    background-color: #131388;
+    outline: none;
+    color: #bfbfbf;
+    font-size: 2.2vmin;
     width: 90%;
 }
 

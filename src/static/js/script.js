@@ -379,7 +379,7 @@ function editPost(data,createNew) {
 
     const saveButton = document.createElement('button');
     saveButton.innerText = createNew ? "Create" : "Save";
-    saveButton.onclick = () => createNew ? submitSubject() : submitEdit(data);
+    saveButton.onclick = () => createNew ? submitPost() : submitEdit(data);
 
     const cancelButton = document.createElement('button');
     cancelButton.innerText = createNew ? "Discard" : "Cancel";
