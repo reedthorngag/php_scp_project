@@ -105,7 +105,6 @@ function submitLogin(form) {
 
     const req = new XMLHttpRequest();
     req.open('POST','../php/login.php');
-    req.setRequestHeader('Content-type','application/json');
     req.onload = () => {
 
         if (req.status !== 200) {
@@ -130,8 +129,7 @@ function submitLogin(form) {
     req.onerror = () => {
         error('Request failed! Check your internet and try again.');
     };
-    req.send('{"email":"'+form['0'].value+'","password":"'+form['1'].value+'"}');
-}
+    req.send('email='+encodeURIComponent(form['0'].value)+'&pass='+encodeURIComponent(form['1'].value));
 
 function loginError(string) {
     document.getElementById('login-error').style.display = 'block';
