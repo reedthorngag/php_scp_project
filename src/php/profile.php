@@ -5,9 +5,9 @@ require 'utils/utils.php';
 
 require 'db.php';
 
-require_login();
-
 session_start();
+
+require_login();
 
 $result = $db->select('users',['username','email'],'s',['username'=>$_SESSION['username']]);
 if (!$result) {
