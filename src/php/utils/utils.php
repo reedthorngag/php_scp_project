@@ -54,6 +54,6 @@ function get_author(DB $db,string $subject) {
         return null;
     }
 
-    return $author['author'];
+    return $author->fetch_assoc()['author'];
 }
 ?>

@@ -626,7 +626,7 @@ function displayPost(postID,save) {
         infoElem.append('Community: ',communityElem,' Author: ',authorElem);
 
         const user = window.localStorage.getItem('username');
-        const level = window.localStorage.getItem('level')
+        const level = window.localStorage.getItem('level') || 10;
 
         if (user===data.author && level <= 5)
             infoElem.append(editButton);
