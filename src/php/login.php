@@ -14,7 +14,7 @@ if (check_set($_POST,'email','pass')){
             $_SESSION['logged_in'] = true;
             $_SESSION['level'] = $result['access'];
             $_SESSION['username'] = $result['username'];
-            echo 'logged in!';
+            echo $result['username'].'\n'.$result['level'];
             die(0);
         }
     }

@@ -110,6 +110,8 @@ function submitLogin(form) {
 
         switch (req.status) {
             case 200:
+                window.localStorage.setItem('username',req.responseText.split('\n')[0]);
+                window.localStorage.setItem('level',parseInt(req.responseText.split('\n')[1]));
                 window.location.reload();
                 break;
             case 401:
@@ -187,34 +189,20 @@ function submitSignup(form) {
         return;
     }
 
-
-
     const req = new XMLHttpRequest();
     req.open('POST','../php/signup.php');
-    req.setRequestHeader('Content-type','application/json');
+    req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     req.onload = () => {
 
-        if (req.status !== 200) {
-            signupError('Login failed with unexpected error. Code: '+req.status);
-            return;
-        }
-
-        const data = JSON.parse(req.responseText);
-        switch (data.status) {
-            case 'success':
+        switch (req.status) {
+            case 200:
                 hidesignup();
                 showlogin();
-                // TODO: display a success message first
                 break;
-            case 'failed':
-                switch (data.reason) {
-                    case 'email_in_use':
-                        signupError('Incorrect username or password!');
-                        break;
-                    case 'display_name_unavailable':
-                        signupError('Display name unavailable!');
-                        break;
-                }
+            case 409:
+                if (req.responseText=='username taken!')
+                    signupError('Username unavailable!');
+                else signupError('Email already in use!');
                 break;
             default:
                 signupError('Unexpected server response! Try again.');
@@ -224,7 +212,7 @@ function submitSignup(form) {
     req.onerror = () => {
         error('Request failed! Check your internet and try again.');
     };
-    req.send(`{"name":"${form[0].value}","email":"${form[1].value}","displayName":"${form[2].value}","dob":"${form[3].value}","password":"${form[4].value}"}`);
+    req.send(`username=${encodeURIComponent(form[0].value)}&email=${encodeURIComponent(form[1].value)}&password=${encodeURIComponent(form[4].value)}"}`);
 }
 
 function signupError(string) {
@@ -323,26 +311,21 @@ function loadPost(data) {
 
     if (data.type !== 'TEXT' && data.type !== 'IMAGE') return; // only text and images are supported so far
 
-    const readButton = document.createElement('button');
-    readButton.innerText = "Read description out loud.";
-    const description = data.description;
-    readButton.onclick = (e) => {
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(new SpeechSynthesisUtterance(description));
-        e.stopPropagation();
-    }
-
     // first build the info header (saying the community and who posted it)
     const communityElem = document.createElement('community');
     communityElem.innerText = data.community;
     const authorElem = document.createElement('author');
     authorElem.innerText = data.author;
     const infoElem = document.createElement('post-header');
-    infoElem.append('Community: ',communityElem,' Author: ',authorElem,readButton);
+    infoElem.append('Community: ',communityElem,' Author: ',authorElem);
 
     // then create the post data, title + body
     const titleElem = document.createElement('title');
     titleElem.innerText = data.subject;
+
+    const classElem = document.createElement('class');
+    classElem.innerText = "Class: "+data.class;
+
     let imgElem;
     if (data.type === 'IMAGE' && data.image) {
         imgElem = document.createElement('img');
@@ -354,13 +337,13 @@ function loadPost(data) {
 
     // then build the post from those
     const post = document.createElement('post');
-    post.append(infoElem,titleElem,imgElem ?? '',bodyPreviewElem);
+    post.append(infoElem,titleElem,classElem,imgElem ?? '',bodyPreviewElem);
 
     // add event listeners
     const [authorID, communityID, postID] = [data.author, data.community, data.subject];
 
     post.onclick = (event) => {
-        displayPost(post,postID,true);
+        displayPost(postID,true);
         event.stopPropagation();
     };
     communityElem.onclick = (event) => {
@@ -376,6 +359,207 @@ function loadPost(data) {
     document.getElementById('posts-feed').appendChild(post);
 }
 
+/**
+ * creates an editable post with submit button to submit the changes
+ * 
+ * @param {JsonPostData} data the post to edit or undefined if creating new
+ * @param {boolean} createNew  if its creating a new post or editing an existing one
+ */
+function editPost(data,createNew) {
+    const content = document.getElementById('content');
+
+    if (createNew) {
+        oldScrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+
+        document.getElementById('tmp-storage').innerText = '';
+        document.getElementById('tmp-storage').append(...content.childNodes);
+    }
+
+    content.innerHTML = '';
+
+    const post = document.createElement('post');
+
+    const saveButton = document.createElement('button');
+    saveButton.innerText = createNew ? "Create" : "Save";
+    saveButton.onclick = () => createNew ? submitSubject() : submitEdit(data);
+
+    const cancelButton = document.createElement('button');
+    cancelButton.innerText = createNew ? "Discard" : "Cancel";
+    cancelButton.classList.add('danger-button');
+    cancelButton.onclick = () => createNew ? goBack() : displayPost(data.subject,false);
+
+
+    const infoElem = document.createElement('post-header');
+
+    if (!createNew) {
+        const communityElem = document.createElement('community');
+        communityElem.innerText = data.community;
+        const authorElem = document.createElement('author');
+        authorElem.innerText = data.author;
+
+        communityElem.onclick = () => displayCommunity(communityID,false);
+        authorElem.onclick = () => displayUserProfile(authorID,false);
+
+        infoElem.append('Community: ',communityElem,' Author: ',authorElem);
+    }
+
+    const backButton = document.createElement('back-button');
+    backButton.onclick = () => createNew ? goBack() : displayPost(data.subject,false);
+
+    infoElem.append(cancelButton,saveButton);
+
+    post.append(backButton, infoElem);
+
+    post.innerHTML += `
+        ${createNew ? '' : '<title> id="subject"></title><br>'}
+        <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
+            ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : ''}
+            <label for="class">Class</label><br>
+            <input type="text" id="class"><br>
+            <label for="image">Image URL</label><br>
+            <input type="text" id="image"><br>
+            <label type="description">Description</label><br>
+            <textarea style="max-width:80%" id="description" rows="5" cols="60"><br>
+            <label for="containment-info">Containment info</label><br>
+            <textarea style="max-width:80%" id="description" rows="4" cols="60"><br>
+        </form>
+    `;
+
+    content.appendChild(post);
+
+    if (!createNew) {
+        document.getElementById('subject').innerText = data.subject;
+        document.getElementById('image').innerText = data.image ?? "";
+        document.getElementById('description').innerText = data.description;
+        document.getElementById('containment-info').innerText = data.containment_info;
+    }
+}
+
+function submitEdit(data) {
+    const form = document.getElementById('edit-post');
+
+    let failed = false;
+    for (let i = 0; i < 4; i++) {
+        form[i].classList.remove('input-error');
+        if (!form[i].value) {
+            form[i].classList.add('input-error');
+            failed = true;
+        }
+    }
+
+    if (failed) return false;
+
+    const req = new XMLHttpRequest();
+    req.open('POST','../php/update_subject.php');
+    req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    req.onload = () => {
+
+        switch (req.status) {
+            case 200:
+                displayPost(data.subject,false);
+                break;
+            case 404:
+                error('Subject not found! (stop messing with stuff).');
+                break;
+            case 403:
+                error('You can\'t edit this! (stop messing with stuff).');
+                break;
+            case 422:
+                error('Invalid data! A field may be too long.');
+                break;
+            default:
+                error('Unexpected server response! Try again.');
+                break;
+        }
+    };
+    req.onerror = () => {
+        error('Request failed! Check your internet and try again.');
+    };
+    req.send(`subject=${encodeURIComponent(data.subject)}`+
+            `&type=${encodeURIComponent(form[1].value ? "IMAGE" : "TEXT")}`+
+            `&class=${encodeURIComponent(form[0].value)}`+
+            `&image=${encodeURIComponent(form[1].value)}`+
+            `&description=${encodeURIComponent(form[2].value)}`+
+            `&containment_info=${encodeURIComponent(form[3].value)}"}`);
+    
+    return false;
+}
+
+function submitPost() {
+    const form = document.getElementById('edit-post');
+
+    let failed = false;
+    for (let i = 0; i < 5; i++) {
+        form[i].classList.remove('input-error');
+        if (!form[i].value) {
+            form[i].classList.add('input-error');
+            failed = true;
+        }
+    }
+
+    if (failed) return false;
+
+    const req = new XMLHttpRequest();
+    req.open('POST','../php/create_subject.php');
+    req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    req.onload = () => {
+
+        switch (req.status) {
+            case 200:
+                displayPost(form[0].value,false);
+                break;
+            case 404:
+                error('Subject not found! (stop messing with stuff).');
+                break;
+            case 403:
+                error('You can\'t create posts!');
+                break;
+            case 422:
+                error('Invalid data! A field may be too long.');
+                break;
+            default:
+                error('Unexpected server response! Try again.');
+                break;
+        }
+    };
+    req.onerror = () => {
+        error('Request failed! Check your internet and try again.');
+    };
+    req.send(`subject=${encodeURIComponent(form[0].value)}`+
+            `&type=${encodeURIComponent(form[2].value ? "IMAGE" : "TEXT")}`+
+            `&class=${encodeURIComponent(form[1].value)}`+
+            `&image=${encodeURIComponent(form[2].value)}`+
+            `&description=${encodeURIComponent(form[3].value)}`+
+            `&containment_info=${encodeURIComponent(form[4].value)}"}`);
+    
+    return false;
+}
+
+function deletePost(data) {
+    const req = new XMLHttpRequest();
+    req.open('POST','../php/delete_subject.php?subject='+encodeURIComponent(data.subject));
+    req.onload = () => {
+
+        switch (req.status) {
+            case 200:
+                goBack();
+                break;
+            case 404:
+                error('Subject not found! (stop messing with stuff).');
+                break;
+            case 403:
+                error('You can\'t delete this! (stop messing with stuff).');
+                break;
+            default:
+                error('Unexpected server response! Try again.');
+                break;
+        }
+    };
+    req.onerror = () => {
+        error('Request failed! Check your internet and try again.');
+    };
+}
+
 
 let onPostsFeed = true; // if currently showing the feed or something else
 let oldScrollPos = 0; // scroll pos to go to when switching back to feed
@@ -384,11 +568,10 @@ let oldScrollPos = 0; // scroll pos to go to when switching back to feed
  * switches the page content to a specific post and saves old content for
  * fast return to feed also saves scroll position
  * 
- * @param {HTMLElement} post    post element that was clicked on
  * @param {string}      postID  id of the post that was clicked on
  * @param {boolean}     save    whether to save old state or not
  */
-function displayPost(post,postID,save) {
+function displayPost(postID,save) {
 
     const req = new XMLHttpRequest();
     req.open('GET','../php/fetch_subject.php?subject='+postID);
@@ -424,14 +607,14 @@ function displayPost(post,postID,save) {
 
         if (data.type !== 'TEXT' && data.type !== 'IMAGE') return; // only text and images are supported so far
 
-        const readButton = document.createElement('button');
-        readButton.innerText = "Read description out loud.";
-        const description = data.description;
-        readButton.onclick = (e) => {
-            window.speechSynthesis.cancel();
-            window.speechSynthesis.speak(new SpeechSynthesisUtterance(description));
-            e.stopPropagation();
-        }
+        const editButton = document.createElement('button');
+        editButton.innerText = "Edit";
+        editButton.onclick = () => editPost(data);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = "delete";
+        deleteButton.classList.add('danger-button');
+        deleteButton.onclick = () => deletePost(data);
 
         // first build the header (saying the community and who posted it and a back button)
         const communityElem = document.createElement('community');
@@ -439,26 +622,40 @@ function displayPost(post,postID,save) {
         const authorElem = document.createElement('author');
         authorElem.innerText = data.author;
         const infoElem = document.createElement('post-header');
-        infoElem.append('Community: ',communityElem,' Author: ',authorElem,readButton);
+        infoElem.append('Community: ',communityElem,' Author: ',authorElem);
+
+        const user = window.localStorage.getItem('username');
+        const level = window.localStorage.getItem('level')
+
+        if (user===data.author && level <= 5)
+            infoElem.append(editButton);
+        if ((user===data.author && level <= 5) || level <= 3)
+            infoElem.append(deleteButton);
 
         // then create the post data, title + body
         const titleElem = document.createElement('title');
         titleElem.innerText = data.subject;
+
+        const classElem = document.createElement('class');
+        classElem.innerText = "Class: "+data.class;
+
         let imgElem;
         if (data.Type === 'IMAGE' && data.image) {
             imgElem = document.createElement('img');
-            imgElem.src = './images/'+data.image;
+            imgElem.src = data.image;
             imgElem.alt = 'post image';
         }
 
         const bodyPreviewElem = document.createElement('body');
         bodyPreviewElem.innerText = data.description;
+        bodyPreviewElem.innerHTML += '<br><br>';
+        bodyPreviewElem.innerText += data.containment_info;
 
         const backbutton = document.createElement('back-button');
 
         // then build the post from those
         const post = document.createElement('post');
-        post.append(backbutton,infoElem,titleElem,imgElem ?? '',bodyPreviewElem);
+        post.append(backbutton,infoElem,titleElem,classElem,imgElem ?? '',bodyPreviewElem);
 
         // add event listeners
         const [authorID, communityID, postID] = [data.author, data.community, data.subject];

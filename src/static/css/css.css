@@ -407,6 +407,11 @@ post post-header button {
     cursor: pointer;
 }
 
+post post-header .danger-button {
+    background-color: #d05050;
+    border-color: #ff0000;
+}
+
 post title {
     display: block;
     width: 100%;
@@ -414,6 +419,15 @@ post title {
     font-weight: 600;
     font-size: 4vmin;
     margin: 1vmin 0 1.5vmin 0.6vw;
+}
+
+post class {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    font-weight: 500;
+    font-size: 3.3vmin;
+    margin: 0 0 0.5vmin 0 1vmin;
 }
 
 post img {
