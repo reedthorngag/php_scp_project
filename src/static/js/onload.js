@@ -30,7 +30,7 @@ function loadProfile() {
 
         let profile = JSON.parse(req.responseText);
 
-        document.getElementById('profile').innerHTML = '<user><span id="name"></span><dropdown-arrow>&lt</dropdown-arrow></user>';
+        document.getElementById('profile').innerHTML = '<button onclick="editPost(undefined,true);" class="create-post">Create post</button><user><span id="name"></span><dropdown-arrow>&lt</dropdown-arrow></user>';
 
         document.getElementById('name').innerText = profile.username;
 

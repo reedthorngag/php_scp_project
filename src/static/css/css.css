@@ -44,6 +44,9 @@ header {
     background-image: radial-gradient(#10a7cf,#101091);
 }
 
+header profle .create-post {
+}
+
 header profile {
     display:flex;
     align-items:center;
@@ -410,6 +413,7 @@ post post-header button {
 post post-header .danger-button {
     background-color: #d05050;
     border-color: #ff0000;
+    margin-left: 2vmin;
 }
 
 post title {
@@ -443,6 +447,20 @@ post body {
     font-size: 2.2vmin;
     margin-left: 1vmin;
     background-color: inherit;
+}
+
+post #edit-post label {
+    font-size: 2.4vmin;
+}
+
+post #edit-post input[type=text] {
+    height: 0.1vmin;
+    margin-bottom: 1.5vmin;
+}
+
+post #edit-post textarea {
+    margin-bottom: 1.5vmin;
+    width: 90%;
 }
 
 /*#endregion*/

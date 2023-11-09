@@ -417,9 +417,9 @@ function editPost(data,createNew) {
             <label for="image">Image URL</label><br>
             <input type="text" id="image"><br>
             <label type="description">Description</label><br>
-            <textarea style="max-width:80%" id="description" rows="5" cols="60"><br>
+            <textarea style="max-width:80%" id="description" rows="12" cols="60"></textarea><br>
             <label for="containment-info">Containment info</label><br>
-            <textarea style="max-width:80%" id="description" rows="4" cols="60"><br>
+            <textarea style="max-width:80%" id="description" rows="8" cols="60"></textarea><br>
         </form>
     `;
 
