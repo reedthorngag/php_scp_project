@@ -513,7 +513,7 @@ function search() {
 
     if (!searchString) return;
 
-    currURI = '../php/search.pho?param='+encodeURIComponent(searchString)+'&skip=';
+    currURI = '../php/search.php?param='+encodeURIComponent(searchString)+'&skip=';
 
     let req = new XMLHttpRequest();
     req.open('GET', currURI+0);
