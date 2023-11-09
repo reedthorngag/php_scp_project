@@ -406,7 +406,8 @@ function editPost(data,createNew) {
 
     const backButton = document.createElement('back-button');
     backButton.onclick = (e) => {
-        createNew ? goBack() : displayPost(data.subject,false);
+        console.log("wegthrygf");
+        //createNew ? goBack() : displayPost(data.subject,false);
         e.stopPropagation();
     }
 
