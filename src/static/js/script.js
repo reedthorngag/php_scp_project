@@ -411,6 +411,8 @@ function editPost(data,createNew) {
         e.stopPropagation();
     }
 
+    console.log(backButton.onclick);
+
     infoElem.append(cancelButton,saveButton);
 
     post.append(backButton, infoElem);
