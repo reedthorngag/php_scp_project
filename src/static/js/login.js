@@ -3,7 +3,7 @@ function login() {
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
     let request = new XMLHttpRequest();
-    request.open('POST','/api/login');
+    request.open('POST','../php/login.php');
     request.setRequestHeader('Content-type','application/json');
     request.onload = () => {
         if (request.status==200) {
