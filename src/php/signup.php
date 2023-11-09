@@ -1,6 +1,8 @@
 <?php
 include "errors.php";
 
+require "utils/utils.php";
+
 require_set($_POST,'username','email','password');
 
 require 'db.php';
