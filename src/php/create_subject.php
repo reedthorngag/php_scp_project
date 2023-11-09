@@ -9,7 +9,7 @@ require_level(4);
 
 require "db.php";
 
-if ($db->insert('subjects','sssss',['subject'=>$_POST['subject'],'author'=>$_SESSION['username'],
+if ($db->insert('subjects','sssssss',['subject'=>$_POST['subject'],'author'=>$_SESSION['username'],
         'community'=>'scp-foundation','class'=>$_POST['class'],'image'=>$_POST['image'],
         'description'=>$_POST['description'],'containment_info'=>$_POST['containment_info']])) {
     echo 'Success!';
