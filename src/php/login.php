@@ -23,4 +23,6 @@ if (check_set($_POST,'email','pass')){
     return;
 }
 
+echo 'what?';
+
 ?>
