@@ -3,6 +3,7 @@ include "errors.php";
 
 require "utils/utils.php";
 
+echo "hi?";
 var_dump($_POST);
 
 if (check_set($_POST,'email','pass')){
