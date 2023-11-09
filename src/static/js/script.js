@@ -384,7 +384,8 @@ function editPost(data,createNew) {
         ${createNew ? '' : '<post-header>'+
             'Community: <community id=community onclick="displayCommunity(\''+data.community+'\',false);"></community>'+
             ' Author: <author id=author onclick="displayProfile(\''+data.author+'\',false)></author>'+
-        '</post-header>'} khjl
+        '</post-header>'}`;
+    post.innerHTML += `
         ${createNew ? '' : '<title> id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
             ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : ''}
