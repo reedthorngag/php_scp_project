@@ -22,7 +22,7 @@ if (!has_access(3) && $author!=$_SESSION['username']) {
 }
 
 $query = $db->conn->prepare('DELETE FROM subjects WHERE subject=?');
-$query->bin_param('s',$_GET['subject']);
+$query->bind_param('s',$_GET['subject']);
 
 if (!$query->execute()) {
     http_response_code(500);

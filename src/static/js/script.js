@@ -522,7 +522,7 @@ function deletePost(data) {
 
         switch (req.status) {
             case 200:
-                goBack();
+                window.location.reload();
                 break;
             case 404:
                 error('Subject not found! (stop messing with stuff).');
