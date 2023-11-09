@@ -210,7 +210,7 @@ function submitSignup(form) {
     req.onerror = () => {
         error('Request failed! Check your internet and try again.');
     };
-    req.send(`username=${encodeURIComponent(form[0].value)}&email=${encodeURIComponent(form[1].value)}&password=${encodeURIComponent(form[4].value)}"}`);
+    req.send(`username=${encodeURIComponent(form[0].value)}&email=${encodeURIComponent(form[1].value)}&pass=${encodeURIComponent(form[4].value)}"}`);
 }
 
 function signupError(string) {

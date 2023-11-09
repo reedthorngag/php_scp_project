@@ -6,7 +6,7 @@ require "utils/utils.php";
 if (check_set($_POST,'email','pass')){
     require "db.php";
 
-    $result = $db->select('users',['username','pass','access'],'s',['email'=>$_POST['email']]);
+    $result = $db->select('users',['*'],'s',['email'=>$_POST['email']]);
     if ($result) {
         $result = $result->fetch_assoc();
         if (password_verify($_POST['pass'],$result['pass'])) {
