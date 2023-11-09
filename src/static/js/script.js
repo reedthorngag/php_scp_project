@@ -608,9 +608,9 @@ function displayPost(postID,save) {
         const user = window.localStorage.getItem('username');
         const level = window.localStorage.getItem('level') || 10;
 
-        if (user===data.author && level <= 5)
+        //if (user===data.author && level <= 5)
             infoElem.append(editButton);
-        if ((user===data.author && level <= 5) || level <= 3)
+        //if ((user===data.author && level <= 5) || level <= 3)
             infoElem.append(deleteButton);
 
         // then create the post data, title + body
