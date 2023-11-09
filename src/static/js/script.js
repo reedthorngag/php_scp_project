@@ -379,12 +379,15 @@ function editPost(data,createNew) {
 
     const saveButton = document.createElement('button');
     saveButton.innerText = createNew ? "Create" : "Save";
-    saveButton.onclick = () => createNew ? submitPost() : submitEdit(data);
+    saveButton.onclick = (e) => {
+        console.log("what?");
+        createNew ? submitPost() : submitEdit(data);
+    }
 
     const cancelButton = document.createElement('button');
     cancelButton.innerText = createNew ? "Discard" : "Cancel";
     cancelButton.classList.add('danger-button');
-    cancelButton.onclick = () => createNew ? goBack() : displayPost(data.subject,false);
+    cancelButton.onclick = (e) => createNew ? goBack() : displayPost(data.subject,false);
 
 
     const infoElem = document.createElement('post-header');
