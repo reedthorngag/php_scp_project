@@ -382,11 +382,10 @@ function editPost(data,createNew) {
     post.innerHTML += `
         <back-button onclick="${createNew ? 'goBack()' : 'displayPost(\''+data.subject+'\',false)'};"></back-button>
         ${createNew ? '' : '<post-header>'+
-            'Community: <community id=community onclick="displayCommunity(\''+data.community+'\',false);"></community>'+
-            ' Author: <author id=author onclick="displayProfile(\''+data.author+'\',false)></author>'+
+            'Community: <community id=community onclick="displayCommunity(\''+data.community+'\',false);"></community> Author: <author id=author onclick="displayProfile(\''+data.author+'\',false)></author>'+
         '</post-header>'}`;
     post.innerHTML += `
-        ${createNew ? '' : '<title> id="subject"></title><br>'}
+        ${createNew ? '' : '<title id="subject"></title><br>'}
         <form id="edit-post" onsubmit="return ${createNew ? 'submitPost()' : 'submitEdit()'};">
             ${createNew ? '<label for="subject">Subject</label><br><input type="text" id="subject"><br>' : ''}
             <label for="class">Class</label><br>
