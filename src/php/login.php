@@ -3,9 +3,6 @@ include "errors.php";
 
 require "utils/utils.php";
 
-http_response_code(422);
-echo "hi?";
-
 if (check_set($_POST,'email','pass')){
     require "db.php";
 
@@ -25,7 +22,5 @@ if (check_set($_POST,'email','pass')){
     echo 'incorrect credentials!';
     return;
 }
-
-echo 'what?';
 
 ?>
