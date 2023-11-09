@@ -457,6 +457,7 @@ function submitEdit(subject) {
     req.onerror = () => {
         error('Request failed! Check your internet and try again.');
     };
+    console.log(form);
     req.send(`subject=${encodeURIComponent(subject)}`+
             `&type=${encodeURIComponent(form[1].value ? "IMAGE" : "TEXT")}`+
             `&class=${encodeURIComponent(form[0].value)}`+
