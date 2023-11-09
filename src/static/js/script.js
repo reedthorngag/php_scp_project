@@ -105,20 +105,14 @@ function submitLogin(form) {
 
     const req = new XMLHttpRequest();
     req.open('POST','../php/login.php');
+    req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     req.onload = () => {
 
-        if (req.status !== 200) {
-            loginError('Login failed with unexpected error. Code: '+req.status);
-            return;
-        }
-
-        const data = JSON.parse(req.responseText);
-        switch (data.status) {
-            case 'success':
-                document.cookie = 'auth='+data.token+'; max-age='+(60*60*24*5)/* 5 days */+'; path=/; Samesite=Strict';
+        switch (req.status) {
+            case 200:
                 window.location.reload();
                 break;
-            case 'invalid_credentials':
+            case 401:
                 loginError('Incorrect username or password!');
                 break;
             default:
