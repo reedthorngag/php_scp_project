@@ -384,7 +384,8 @@ function editPost(data,createNew) {
     
     post.innerHTML += createNew ? '' : `<post-header>
 Community: <community id=community onclick="displayCommunity('${data.community}',false);"></community>
- Author: <author id=author onclick="displayProfile('${data.author}',false)></author>
+ Author: `
+    post.innerHTML += `<author id=author onclick="displayProfile('${data.author}',false)></author>
         </post-header>'`
     post.innerHTML += `
         ${createNew ? '' : '<title id="subject"></title><br>'}
