@@ -7,7 +7,7 @@ require 'db.php';
 
 require_login();
 
-start_session();
+session_start();
 
 $result = $db->select('users',['username','email'],'s',['username'=>$_SESSION['username']]);
 if (!$result) {

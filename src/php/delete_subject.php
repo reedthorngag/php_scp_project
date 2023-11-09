@@ -13,7 +13,8 @@ if (!$author) {
     http_response_code(404);
     die(0);
 }
-start_session();
+
+session_start();
 
 if (!has_access(3) && $author!=$_SESSION['username']) {
     http_response_code(403);
