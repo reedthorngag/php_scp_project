@@ -460,8 +460,8 @@ function submitEdit(subject) {
             `&type=${encodeURIComponent(form[1].value ? "IMAGE" : "TEXT")}`+
             `&class=${encodeURIComponent(form[0].value)}`+
             `&image=${encodeURIComponent(form[1].value)}`+
-            `&description=${encodeURIComponent(form[2].value)}`+
-            `&containment_info=${encodeURIComponent(form[3].value)}"}`);
+            `&description=${encodeURIComponent(form[2].innerText)}`+
+            `&containment_info=${encodeURIComponent(form[3].innerText)}"}`);
     
     return false;
 }

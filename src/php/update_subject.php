@@ -32,7 +32,7 @@ $result = $db->update('subjects','ss',[
         'description'=>$_POST['description'],
         'containment_info'=>$_POST['containment_info']
     ],'s',
-    ['subject'=>$_GET['subject']]);
+    ['subject'=>$_POST['subject']]);
 
 if (!$result) {
     http_response_code(422);
